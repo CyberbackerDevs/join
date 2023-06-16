@@ -11,7 +11,14 @@
                     <div class="subwh">There will be a different list of items for each question.<br />Please arrange the options that represent your thoughts by clicking and<br />dragging your “<strong>most preferential</strong>” answer to “<strong>least preferential.</strong>”</div>
                     <div class="subwh">It will take you about 15 minutes to complete the assessment.<br />Please find a quiet place where you will not be interrupted before starting.</div>
                 </div>
-                <div class="new_list">
+                 <div class="submit-values" v-if="!aftersubmitloading">
+                    <button v-on:click="proceedToValues" v-if="!stats">Take Values Assessment</button>
+                    <button v-on:click="submit" v-if="stats">Confirm Values Assessment Completed</button>
+                 </div>
+                 <div class="show-loading-after-submit" v-if="aftersubmitloading">
+                    <img :src="require('@/assets/images/loadingme.gif')" alt="">
+                </div>
+                <!-- <div class="new_list">
                     <div class="dloadingpart" v-if="showQuestionsLoading">
                         <div class="dlp-inner">
                             <v-progress-circular
@@ -46,23 +53,22 @@
                                         <span>{{nextTextBase}}</span> <button v-on:click="confirmProceedtoNextQuestion(index)">Proceed to next question <span><font-awesome-icon icon="arrow-right" /></span></button>
                                     </div>
                                     <div class="dnextquestion" v-if="nextTextBase === ''">
-                                        <!-- <button class="dprevbtn" v-on:click="proceedToPrevQuestion(index)" :class="(index == 0 ? 'hide-button' : '')"><span><font-awesome-icon icon="arrow-left" /></span> Previous Question</button> -->
                                         <button class="dnextbtn" v-on:click="proceedToNextQuestion(index)" :class="(currentQuestions == maxIndex ? 'hide-button' : '')">Next Question <span><font-awesome-icon icon="arrow-right" /></span></button>
                                     </div>
                                 </v-expansion-panel-content>
                             </v-expansion-panel>
                         </v-expansion-panels>
                     </div>
-                </div>
+                </div> -->
             </div>
-            <div class="dsubmitforms" v-if="!showLoading">
+            <!-- <div class="dsubmitforms" v-if="!showLoading">
                 <div class="subs" v-if="hideSubmit">
                     <button type="submit" v-on:click="submit">Submit Y-assessment</button>
                 </div>
                 <div class="show-loading-after-submit" v-if="aftersubmitloading">
                     <img :src="require('@/assets/images/loadingme.gif')" alt="">
                 </div>
-            </div>
+            </div> -->
             
         </div>
     </v-app>
@@ -94,6 +100,7 @@ export default {
             hideSubmit: false,
             aftersubmitloading: false,
             uuid: '',
+            stats: false,
             bquest: [], // list of questions
             panel: 0, // what panel is showing in the yassessment form
             currentQuestions: 0, // current question where the applicant is answering
@@ -116,9 +123,21 @@ export default {
         }
     },
     methods: {
+        proceedToValues(){
+            /**
+             * open new assessment
+             */
+            window.open("https://profiles.innermetrix.com/VO/a38ab06f/en");
+
+            /**
+             * redirect page
+             */
+            window.location.href = "/apply/assessment/?uuid="+this.uuid+"&stats=opened_link";
+
+        },
         submit(){
             this.reset();
-            this.calculateAssessment();
+            // this.calculateAssessment();
 
             let userid = this.uuid;
             let self = this;
@@ -161,15 +180,28 @@ export default {
                 'token': userid
             }
 
+            // let params = {
+            //     "yassessment":{
+            //         "altruist": (this.answers['altruist'] / 80 * 100),
+            //         "individualistic": (this.answers['individualistic'] / 80 * 100),
+            //         "economic": (this.answers['economic'] / 80 * 100),
+            //         "aesthetic": (this.answers['aesthetic'] / 80 * 100),
+            //         "theoretical": (this.answers['theoretical'] / 80 * 100),
+            //         "regulatory": (this.answers['regulatory'] / 80 * 100),
+            //         "political": (this.answers['political'] / 80 * 100)
+            //     },
+            //     "status": assesment_status
+            // };
+
             let params = {
                 "yassessment":{
-                    "altruist": (this.answers['altruist'] / 80 * 100),
-                    "individualistic": (this.answers['individualistic'] / 80 * 100),
-                    "economic": (this.answers['economic'] / 80 * 100),
-                    "aesthetic": (this.answers['aesthetic'] / 80 * 100),
-                    "theoretical": (this.answers['theoretical'] / 80 * 100),
-                    "regulatory": (this.answers['regulatory'] / 80 * 100),
-                    "political": (this.answers['political'] / 80 * 100)
+                    "altruist": 40,
+                    "individualistic": 40,
+                    "economic": 40,
+                    "aesthetic": 40,
+                    "theoretical": 40,
+                    "regulatory": 40,
+                    "political": 40,
                 },
                 "status": assesment_status
             };
@@ -317,11 +349,17 @@ export default {
         },
         setupUserID(){
             this.uuid = this.$route.query.uuid;
+
+            if (typeof this.$route.query.stats === "undefined") {
+                this.stats = false;
+            } else {
+                this.stats = true;
+            }
         },
     },
     mounted(){
-        this.checkValidUser(this.$route.query.uuid);
-        this.getQuestions();
+        // this.checkValidUser(this.$route.query.uuid);
+        // this.getQuestions();
         this.setupUserID();
     }
 }
@@ -446,6 +484,21 @@ export default {
         width: 450px;
         margin-top: -90px;
     }
+
+    .submit-values {
+        text-align: center;
+    }
+
+    .submit-values button {
+        background: #1976d2;
+        color: #fff;
+        line-height: 1em;
+        font-weight: 100;
+        font-size: 25px;
+        padding: 20px 60px;
+        border-radius: 100px;
+    }
+
 </style>
 
 <style> 
