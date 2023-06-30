@@ -3,13 +3,15 @@
         <div class="d-start-appliation" >
             <ApplyStepper step="3"/>
             <div class="d-start-header">
-                <h1>Y-assessment</h1>
+                <h1>Values Assessment</h1>
             </div>
             <div class="dformitem">
-                <div class="dwelcomeheader" >
-                    <div class="subwh">The Y-assessment helps understand the reasons that drive an individual to utilize<br />their talents in the unique way they do. It helps determine their motivators and drivers.</div>
-                    <div class="subwh">There will be a different list of items for each question.<br />Please arrange the options that represent your thoughts by clicking and<br />dragging your “<strong>most preferential</strong>” answer to “<strong>least preferential.</strong>”</div>
-                    <div class="subwh">It will take you about 15 minutes to complete the assessment.<br />Please find a quiet place where you will not be interrupted before starting.</div>
+                <div class="dwelcomeheader" v-if="!stats">
+                    <div class="subwh">To proceed, please take a moment to complete our Values Assessment, which aims to uncover the underlying motivations that guide your unique utilization of talents. This assessment will help identify your key motivators and drivers.</div>
+                    <div class="subwh">To begin, kindly click the button below, and you will be redirected to another link where you can complete the Values Assessment. The process should take approximately 15 minutes. Before you start, ensure you find a quiet environment where you can concentrate without interruptions. Afterward, kindly return to the application site and confirm your completion of the Values Assessment.</div>
+                </div>
+                <div class="dwelcomeheader" v-if="stats">
+                    <div class="subwh">Have you completed the Values Assessment?</div>
                 </div>
                  <div class="submit-values" v-if="!aftersubmitloading">
                     <button v-on:click="proceedToValues" v-if="!stats">Take Values Assessment</button>
@@ -127,7 +129,7 @@ export default {
             /**
              * open new assessment
              */
-            window.open("https://profiles.innermetrix.com/VO/a38ab06f/en");
+            window.open("https://profiles.innermetrix.com/VO/d7202cd5/en");
 
             /**
              * redirect page
