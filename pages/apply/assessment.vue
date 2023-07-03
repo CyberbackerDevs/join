@@ -11,11 +11,12 @@
                     <div class="subwh">To begin, kindly click the button below, and you will be redirected to another link where you can complete the Values Assessment. The process should take approximately 15 minutes. Before you start, ensure you find a quiet environment where you can concentrate without interruptions. Afterward, kindly return to the application site and confirm your completion of the Values Assessment.</div>
                 </div>
                 <div class="dwelcomeheader" v-if="stats">
-                    <div class="subwh">Have you completed the Values Assessment?</div>
+                    <iframe :src="values_link" width="890px" height="700px" frameborder="0"></iframe>
+                    <div class="subwh" style="margin-top: 60px;" v-if="show_confirm">Have you completed the Values Assessment?</div>
                 </div>
                  <div class="submit-values" v-if="!aftersubmitloading">
                     <button v-on:click="proceedToValues" v-if="!stats">Take Values Assessment</button>
-                    <button v-on:click="submit" v-if="stats">Confirm Values Assessment Completed</button>
+                    <button v-on:click="submit" v-if="show_confirm">Confirm Values Assessment Completed</button>
                  </div>
                  <div class="show-loading-after-submit" v-if="aftersubmitloading">
                     <img :src="require('@/assets/images/loadingme.gif')" alt="">
@@ -100,6 +101,7 @@ export default {
         return {
             showLoading: true,
             hideSubmit: false,
+            show_confirm: false,
             aftersubmitloading: false,
             uuid: '',
             stats: false,
@@ -122,6 +124,7 @@ export default {
                 altruist: 0,
             },
             fillers: [],
+            values_link: 'https://profiles.innermetrix.com/VO/e6ff0e1b/en'
         }
     },
     methods: {
@@ -129,7 +132,7 @@ export default {
             /**
              * open new assessment
              */
-            window.open("https://profiles.innermetrix.com/VO/d7202cd5/en");
+            // window.open(this.values_link);
 
             /**
              * redirect page
@@ -363,6 +366,9 @@ export default {
         // this.checkValidUser(this.$route.query.uuid);
         // this.getQuestions();
         this.setupUserID();
+    },
+    created() {
+        setTimeout(() => this.show_confirm = true, 300000)
     }
 }
 </script>
