@@ -8,9 +8,10 @@
             <div class="dformitem">
                 <div class="dwelcomeheader" v-if="!stats">
                     <div class="subwh">To proceed, please take a moment to complete our Values Assessment, which aims to uncover the underlying motivations that guide your unique utilization of talents. This assessment will help identify your key motivators and drivers.</div>
-                    <div class="subwh">To begin, kindly click the button below, and you will be redirected to another link where you can complete the Values Assessment. The process should take approximately 15 minutes. Before you start, ensure you find a quiet environment where you can concentrate without interruptions. Afterward, kindly return to the application site and confirm your completion of the Values Assessment.</div>
+                    <div class="subwh">To begin, kindly click the button below.The process should take approximately 15 minutes. Before you start, ensure you find a quiet environment where you can concentrate without interruptions. </div>
                 </div>
                 <div class="dwelcomeheader" v-if="stats">
+                    <div class="subwh">Fill out the form below and start answering the Values Assessment. Once completed, you will see a button at the bottom part of the page. Click it to confirm your completion of the Values Assessment.</div>
                     <iframe :src="values_link" width="890px" height="700px" frameborder="0"></iframe>
                     <div class="subwh" style="margin-top: 60px;" v-if="show_confirm">Have you completed the Values Assessment?</div>
                 </div>
@@ -124,7 +125,7 @@ export default {
                 altruist: 0,
             },
             fillers: [],
-            values_link: 'https://profiles.innermetrix.com/VO/e6ff0e1b/en'
+            values_link: 'https://profiles.innermetrix.com/VO/150f6290/en'
         }
     },
     methods: {
@@ -368,7 +369,8 @@ export default {
         this.setupUserID();
     },
     created() {
-        setTimeout(() => this.show_confirm = true, 300000)
+        // setTimeout(() => this.show_confirm = true, 300000)
+        setTimeout(() => this.show_confirm = true, 5000)
     }
 }
 </script>
