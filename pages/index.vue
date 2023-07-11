@@ -201,7 +201,7 @@
                             <v-textarea v-model="form.bio" label="Bio" ></v-textarea>
                         </div>
                         <div class="d-profile-item d-form-full" ref="socialpart">
-                            <v-text-field v-model="form.facebook" label="Social Media Profiles" hint="Add active social media profile links" :rules="['Required']"></v-text-field>
+                            <v-text-field v-model="form.facebook" label="Social Media Profiles" hint="Add active social media profile links"></v-text-field>
                         </div>
                         <div class="d-profile-item d-form-full d-inline-checkbox"  ref="otherjobs">
                             <label for="">Other online jobs?</label>

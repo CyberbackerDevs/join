@@ -12,7 +12,7 @@
                 </div>
                 <div class="dwelcomeheader" v-if="stats">
                     <div class="subwh">Fill out the form below and start answering the Values Assessment. Once completed, you will see a button at the bottom part of the page. Click it to confirm your completion of the Values Assessment.</div>
-                    <iframe :src="values_link" width="890px" height="700px" frameborder="0"></iframe>
+                    <iframe :src="values_link" :key="'values-iframe-'+values_link" width="890px" height="700px" frameborder="0"></iframe>
                     <div class="subwh" style="margin-top: 60px;" v-if="show_confirm">Have you completed the Values Assessment?</div>
                 </div>
                  <div class="submit-values" v-if="!aftersubmitloading">
@@ -125,7 +125,7 @@ export default {
                 altruist: 0,
             },
             fillers: [],
-            values_link: 'https://profiles.innermetrix.com/VO/150f6290/en'
+            values_link: null
         }
     },
     methods: {
@@ -362,10 +362,21 @@ export default {
                 this.stats = true;
             }
         },
+        async getAssessmentLink(){
+            let self = this;
+            this.$axios.get('https://be.applytocyberbacker.com/api/valuesLink')
+            .then(function (response) {
+                self.values_link = response.data.data.link
+            })
+            .catch(function (error) {
+                console.log('show error ->', error);
+            });
+        }
     },
     mounted(){
         // this.checkValidUser(this.$route.query.uuid);
         // this.getQuestions();
+        this.getAssessmentLink();
         this.setupUserID();
     },
     created() {
